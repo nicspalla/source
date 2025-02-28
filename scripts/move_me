@@ -17,12 +17,10 @@ git log --pretty=email --patch-with-stat --reverse --full-index --binary -m --fi
 cd ..
 sed -i "s/${folder_source}\//${folder_target}\//g" copy.patch
 
-for target_repo in ${target_repos}
+for target_repo in ${target_repos} ; do
     cd ${target_repo}
     git checkout ${target_branch}
     git am --committer-date-is-author-date < ../copy.patch
-    #git mv ${file_source} ${file_target}
-    #git commit -m "copy file ${file_source} from ${source_branch} branch to file ${file_target} in ${target_branch} branch"
     [ "${push}" == "push" ] && git push
     cd ..
 done
